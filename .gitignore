@@ -2,4 +2,8 @@
 yarn.lock
 /env/*
 serviceAccountKey.json
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> 163ba695984e07e2fbcc28333bbde3f76345cfd3
