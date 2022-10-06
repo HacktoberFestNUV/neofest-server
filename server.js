@@ -32,16 +32,23 @@ try {
       data: []
     }
 
+    try {
+      fs.readFileSync('userData.json', 'utf8')
+    } catch (error) {
+      console.log(error)
+      fs.writeFileSync('userData.json', JSON.stringify(userData));
+    }
+
     querySnapshot.docChanges().forEach((change) => {
       if (change.type == 'added') {
         userData.data.push(change.doc.data());
 
-        const dataArr = JSON.parse(fs.readFileSync('userData.json', 'utf8')).data;
+        const fileData = fs.readFileSync('userData.json', 'utf8')
+        const dataArr = JSON.parse(fileData).data;
 
         for(let i = 0; i < dataArr.length; i++) {
           if(!dataArr[i].uid === change.doc.data().uid) {
-            console.log('send')
-            // sender(change.doc.data().email, change.doc.data().name);
+            sender(change.doc.data().email, change.doc.data().name);
             break;
           }
         }
@@ -55,6 +62,6 @@ try {
   console.error(error);
 }
 
-app.listen(5000, async () => {
+app.listen(3001, async () => {
   console.log("waddup :)");
 });
