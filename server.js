@@ -14,7 +14,7 @@ const sender = async (to, user_name) => {
     from: user,
     to,
     subject: 'RSVP confirmed!!!',
-    html: `<b>Thanks ${user_name} for RSVP'ing for the event! We love you have a cupcake!</b>`,
+    html: `<b>Thanks ${user_name} for RSVP'ing for the event! We love you and have a cupcake!</b>`,
     text: 'This is text version!',
     replyTo: user,
 
@@ -24,44 +24,21 @@ const sender = async (to, user_name) => {
 };
 
 try {
-  //   console.log(123, db);
   const collection = db.collection('users');
-
+  let i = 0;
   const observer = collection.onSnapshot((querySnapshot) => {
-    let userData = {
-      data: []
-    }
-
-    try {
-      fs.readFileSync('userData.json', 'utf8')
-    } catch (error) {
-      console.log(error)
-      fs.writeFileSync('userData.json', JSON.stringify(userData));
-    }
-
     querySnapshot.docChanges().forEach((change) => {
-      if (change.type == 'added') {
-        userData.data.push(change.doc.data());
-
-        const fileData = fs.readFileSync('userData.json', 'utf8')
-        const dataArr = JSON.parse(fileData).data;
-
-        for(let i = 0; i < dataArr.length; i++) {
-          if(!dataArr[i].uid === change.doc.data().uid) {
-            sender(change.doc.data().email, change.doc.data().name);
-            break;
-          }
-        }
+      if (change.type == 'added' && i > 0) {
+        console.log(change.doc.data());
+        sender(change.doc.data().email, change.doc.data().name);
       }
     });
-
-    fs.writeFileSync('userData.json', JSON.stringify(userData));
-    
+    i = i + 1;
   });
 } catch (error) {
   console.error(error);
 }
 
 app.listen(3001, async () => {
-  console.log("waddup :)");
+  console.log('waddup :)');
 });
