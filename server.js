@@ -7,6 +7,7 @@ import nodeoutlook from 'nodejs-nodemailer-outlook';
 
 const sender = async (to, user_name) => {
   const text = `<b>Thanks ${user_name} for RSVP'ing for the event! We love you and have a cupcake!</b>`;
+
   nodeoutlook.sendEmail({
     auth: {
       user: user,
@@ -17,6 +18,7 @@ const sender = async (to, user_name) => {
     subject: 'RSVP confirmed!!!',
     html: `${text}`,
     text: `${text}`,
+
     replyTo: user,
 
     onError: (e) => console.log(e),
