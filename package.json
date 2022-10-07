@@ -15,10 +15,14 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "nodemon --experimental-json-modules server.js"
+    "dev": "nodemon --experimental-json-modules server.js",
+    "fly": "nodemon src/tickets-onfly/index.js",
+    "qr": "nodemon src/tickets-onfly/makeQR.js"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "canvas": "^2.10.1",
+    "qrcode": "^1.5.1"
   },
   "engines": {
     "node": ">=16.15.0"
