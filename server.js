@@ -1,10 +1,11 @@
 import express from 'express';
 import { db } from './src/firebase-init.js';
 import { user, pass } from './getCreds.js';
+import fs from 'fs';
 const app = express();
 import nodeoutlook from 'nodejs-nodemailer-outlook';
 
-const sender = async (to) => {
+const sender = async (to, user_name) => {
   nodeoutlook.sendEmail({
     auth: {
       user: user,
@@ -13,7 +14,7 @@ const sender = async (to) => {
     from: user,
     to,
     subject: 'RSVP confirmed!!!',
-    html: "<b>Thanks for RSVP'ing for the event! We love you have a cupcake!</b>",
+    html: `<b>Thanks ${user_name} for RSVP'ing for the event! We love you and have a cupcake!</b>`,
     text: 'This is text version!',
     replyTo: user,
 
@@ -23,21 +24,21 @@ const sender = async (to) => {
 };
 
 try {
-  //   console.log(123, db);
   const collection = db.collection('users');
-
+  let i = 0;
   const observer = collection.onSnapshot((querySnapshot) => {
     querySnapshot.docChanges().forEach((change) => {
-      if (change.type == 'added') {
+      if (change.type == 'added' && i > 0) {
         console.log(change.doc.data());
-        sender(change.doc.data().email);
+        sender(change.doc.data().email, change.doc.data().name);
       }
     });
+    i = i + 1;
   });
 } catch (error) {
   console.error(error);
 }
 
 app.listen(3001, async () => {
-  console.log("waddup :)");
+  console.log('waddup :)');
 });
