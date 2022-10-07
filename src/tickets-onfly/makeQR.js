@@ -1,16 +1,17 @@
-const QRCode = require('qrcode');
-const { createCanvas, loadImage } = require('canvas');
+import fs from 'fs';
+import QRCode from 'qrcode';
+import jwt from 'jsonwebtoken';
 
+import { createCanvas } from 'canvas';
 const canvas = createCanvas(4096, 1379);
-const fs = require('fs');
 
-// QRCode.toDataURL('I am a pony!', function (err, url) {
-//   console.log(url);
-// });
-console.log('asd');
+export const makeQROnFly = async (uid, name, email) => {
+  const token = jwt.sign({ uid, name, email }, '%hacktoberfest2022%%');
+  QRCode.toCanvas(canvas, token, function cb(err) {
+    const buffer = canvas.toBuffer('image/png');
+    fs.writeFileSync('./qr.png', buffer);
+  });
+};
 
-QRCode.toCanvas(canvas, 'asd', function cb(err) {
-  const buffer = canvas.toBuffer('image/png');
-  fs.writeFileSync('./qr.png', buffer);
-  console.log('asd');
-});
+// example
+// makeQROnFly('asdasda123', 'nimit', 'mnimitsavant@gmail.com');
