@@ -4,7 +4,7 @@ import { user, pass } from './getCreds.js';
 import fs from 'fs';
 const app = express();
 import nodeoutlook from 'nodejs-nodemailer-outlook';
-
+const PORT = process.env.PORT || 3001;
 const sender = async (to, user_name) => {
   const text = `<b>Thanks ${user_name} for RSVP'ing for the event! We love you and have a cupcake!</b>`;
 
@@ -42,6 +42,6 @@ try {
   console.error(error);
 }
 
-app.listen(3001, async () => {
+app.listen(PORT, async () => {
   console.log('waddup :)');
 });
