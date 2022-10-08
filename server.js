@@ -48,31 +48,31 @@ const sender = async (uid, name, to) => {
     },
   });
 };
-sender('123', 'nimit', 'ashwinadiga0111@gmail.com');
-// try {
-//   const collection = db.collection('users');
-//   let i = 0;
-//   const observer = collection.onSnapshot((querySnapshot) => {
-//     querySnapshot.docChanges().forEach((change) => {
-//       if (change.type == 'added' && i > 0) {
-//         console.log(change.doc.data());
-//         sender(
-//           change.doc.data().uid,
-//           change.doc.data().name,
-//           change.doc.data().email
-//         );
-//       }
-//     });
-//     i = i + 1;
-//   });
-// } catch (error) {
-//   console.error(error);
-// }
+// sender('123', 'nimit', 'ashwinadiga0111@gmail.com');
+try {
+  const collection = db.collection('users');
+  let i = 0;
+  const observer = collection.onSnapshot((querySnapshot) => {
+    querySnapshot.docChanges().forEach((change) => {
+      if (change.type == 'added' && i > 0) {
+        console.log(change.doc.data());
+        sender(
+          change.doc.data().uid,
+          change.doc.data().name,
+          change.doc.data().email
+        );
+      }
+    });
+    i = i + 1;
+  });
+} catch (error) {
+  console.error(error);
+}
 
-// app.get('/', (req, res) => {
-//   res.send('The NEOFEST Server online ✅');
-// });
+app.get('/', (req, res) => {
+  res.send('The NEOFEST Server online ✅');
+});
 
-// app.listen(PORT, async () => {
-//   console.log('waddup :)');
-// });
+app.listen(PORT, async () => {
+  console.log('waddup :)');
+});
