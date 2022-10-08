@@ -9,7 +9,7 @@ export const makeQROnFly = async (uid, name, email) => {
   const token = jwt.sign({ uid, name, email }, '%hacktoberfest2022%%');
   QRCode.toCanvas(canvas, token, function cb(err) {
     const buffer = canvas.toBuffer('image/png');
-    fs.writeFileSync('./qr.png', buffer);
+    fs.writeFileSync(`./qr-${uid}.png`, buffer);
   });
 };
 
