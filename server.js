@@ -54,6 +54,10 @@ try {
   console.error(error);
 }
 
+app.get('/', (req, res) => {
+  res.send('The NEOFEST Server online ✅');
+});
+
 app.listen(PORT, async () => {
   console.log('waddup :)');
 });
