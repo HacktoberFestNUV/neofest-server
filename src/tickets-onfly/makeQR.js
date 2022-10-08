@@ -14,4 +14,4 @@ export const makeQROnFly = async (uid, name, email) => {
 };
 
 // example
-// makeQROnFly('asdasda123', 'nimit', 'mnimitsavant@gmail.com');
+// makeQROnFly('asdasda123', 'xoxo', 'xoxo@gmail.com');

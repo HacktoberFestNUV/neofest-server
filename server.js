@@ -33,7 +33,7 @@ const sender = async (uid, name, to) => {
     onSuccess: (i) => console.log(i),
   });
 };
-// sender('uid123', 'ashwin', 'ashwinadiga0111@gmail.com');
+
 try {
   const collection = db.collection('users');
   let i = 0;
