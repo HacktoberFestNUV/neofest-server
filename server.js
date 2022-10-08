@@ -1,12 +1,14 @@
 import express from 'express';
 import { db } from './src/firebase-init.js';
 import { user, pass } from './getCreds.js';
-import fs from 'fs';
+import { createTicketOnFly } from './src/tickets-onfly/index.js';
 const app = express();
 import nodeoutlook from 'nodejs-nodemailer-outlook';
 const PORT = process.env.PORT || 3001;
-const sender = async (to, user_name) => {
-  const text = `<b>Thanks ${user_name} for RSVP'ing for the event! We love you and have a cupcake!</b>`;
+const sender = async (uid, name, to) => {
+  await createTicketOnFly(uid, name, to);
+
+  const text = `<b>Thanks ${name} for RSVP'ing for the event! We love you and have a cupcake!</b>`;
 
   nodeoutlook.sendEmail({
     auth: {
@@ -20,6 +22,12 @@ const sender = async (to, user_name) => {
     text: `${text}`,
 
     replyTo: user,
+    attachments: [
+      {
+        filename: `${name}.png`,
+        path: './onfly.png',
+      },
+    ],
 
     onError: (e) => console.log(e),
     onSuccess: (i) => console.log(i),
@@ -33,7 +41,11 @@ try {
     querySnapshot.docChanges().forEach((change) => {
       if (change.type == 'added' && i > 0) {
         console.log(change.doc.data());
-        sender(change.doc.data().email, change.doc.data().name);
+        sender(
+          change.doc.data().uid,
+          change.doc.data().name,
+          change.doc.data().email
+        );
       }
     });
     i = i + 1;
