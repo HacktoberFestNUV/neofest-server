@@ -4,7 +4,7 @@ import { makeQROnFly } from './makeQR.js';
 const canvas = createCanvas(4096, 1379);
 const ctx = canvas.getContext('2d');
 
-export const createTicketOnFly = (uid, name, email) => {
+export const createTicketOnFly = async (uid, name, email) => {
   // Write "Awesome!"
   // ctx.font = '30px Impact';
   // ctx.rotate(0.1);
@@ -14,10 +14,10 @@ export const createTicketOnFly = (uid, name, email) => {
   // var text = ctx.measureText('Awesome!');
   // ctx.lineTo(50 + text.width, 102);
   // ctx.lineTo(50, 102);
-  ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-  ctx.beginPath();
-  ctx.lineTo(50, 102);
-  ctx.stroke();
+  // ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+  // ctx.beginPath();
+  // ctx.lineTo(50, 102);
+  // ctx.stroke();
 
   // Draw cat with lime helmet
   loadImage('images/qr-ticket.png').then(async (image) => {
@@ -35,4 +35,4 @@ export const createTicketOnFly = (uid, name, email) => {
   });
 };
 
-createTicketOnFly('asdasda123', 'nimit', 'mnimitsavant@gmail.com');
+// createTicketOnFly('asdasda123', 'nimit', 'mnimitsavant@gmail.com');
